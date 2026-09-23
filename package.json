@@ -1,0 +1,29 @@
+{
+  "name": "fyrx-assisted",
+  "version": "1.0.0",
+  "description": "Drop-in, fully-configurable canned-reply addon for discord.js bots — prefix shortcodes, keyword auto-detection, and slash commands, all toggleable per server. No env vars required.",
+  "main": "index.js",
+  "exports": {
+    ".": {
+      "import": "./index.js",
+      "require": "./index.js"
+    }
+  },
+  "keywords": [
+    "discord.js",
+    "discord-bot",
+    "canned-replies",
+    "auto-responder",
+    "support-bot",
+    "fyrxlab"
+  ],
+  "author": "FyrxLab",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/FyrxLab/Fyrx-Assisted.git"
+  },
+  "peerDependencies": {
+    "discord.js": "^14.27.0"
+  }
+}
