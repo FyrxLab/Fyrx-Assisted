@@ -79,7 +79,7 @@ if (match) {
 }
 ```
 
-A partir de `fyrx-ai@1.3.0`, su propio listener de `messageCreate` respeta
+A partir de `@fyrx/fyrxai@1.3.0`, su propio listener de `messageCreate` respeta
 automáticamente `message.fyrxAssistedHandled` (lo marca `fyrx-assisted` tras
 responder), así que con ambos addons montados sobre el mismo `client` no hay
 doble respuesta — basta con montar `fyrx-assisted` antes de `fyrx-ai`:
