@@ -1,5 +1,5 @@
 {
-  "name": "fyrx-assisted",
+  "name": "@fyrx/fyrx-assisted",
   "version": "1.0.0",
   "description": "Drop-in, fully-configurable canned-reply addon for discord.js bots — prefix shortcodes, keyword auto-detection, and slash commands, all toggleable per server. No env vars required.",
   "main": "index.js",

@@ -16,12 +16,12 @@ entorno ni tocar código.
 ## Instalación
 
 ```bash
-npm install fyrx-assisted
+npm install @fyrx/fyrx-assisted
 ```
 
 ```js
 const { Client, GatewayIntentBits } = require('discord.js');
-const setupFyrxAssisted = require('fyrx-assisted');
+const setupFyrxAssisted = require('@fyrx/fyrx-assisted');
 
 const client = new Client({
     intents: [
@@ -67,12 +67,12 @@ consume el paquete (no dentro de `node_modules`, para que sobreviva a un
 
 ## Integración con fyrx-ai
 
-`fyrx-assisted` expone `matchReply(guildId, content)` para que otro addon
-en el mismo cliente compruebe si ya existe una respuesta enlatada antes de
-gastar una llamada a IA:
+`@fyrx/fyrx-assisted` expone `matchReply(guildId, content)` para que otro
+addon en el mismo cliente compruebe si ya existe una respuesta enlatada
+antes de gastar una llamada a IA:
 
 ```js
-const fyrxAssisted = require('fyrx-assisted');
+const fyrxAssisted = require('@fyrx/fyrx-assisted');
 const match = fyrxAssisted.matchReply(message.guild.id, message.content);
 if (match) {
     // ya respondido por fyrx-assisted (o respóndelo tú mismo) — no llames a fyrx-ai
