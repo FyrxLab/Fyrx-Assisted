@@ -37,6 +37,11 @@ client.login(process.env.DISCORD_TOKEN);
 
 Ver [`example/bot.js`](example/bot.js) para un bot mínimo funcional.
 
+Requisitos: Node.js 18+, discord.js 14.27+, el intent privilegiado **Message Content**
+activado en el Developer Portal y el scope `applications.commands` al invitar el bot.
+
+Para probar el paquete: `node test.js`.
+
 ## Disparadores (todos toggleables por servidor)
 
 | Tipo | Ejemplo | Quién puede usarlo |
@@ -74,28 +79,33 @@ Cada respuesta enviada, comando de configuración y error se guarda siempre en
 `fyrx-assisted-data/debug.txt` (rota a 2 MB). `/fyrxassisted config logs false` quita la salida por consola
 sin detener el archivo; `/fyrxassisted config debug` te lo envía para compartirlo. Contiene fragmentos de mensajes.
 
-## Integración con fyrx-ai
+## Integración con FyrxAI
 
-`@fyrx/fyrx-assisted` expone `matchReply(guildId, content)` para que otro
-addon en el mismo cliente compruebe si ya existe una respuesta enlatada
-antes de gastar una llamada a IA:
+[`@fyrx/fyrxai`](https://github.com/FyrxLab/fyrx-ai) es el agente de soporte con IA
+de FyrxLab. Juntos cubren todo el soporte: FyrxAssisted responde lo repetitivo con
+texto fijo (gratis e instantáneo) y FyrxAI responde el resto con la documentación.
+
+Con ambos en el mismo `client` no hay doble respuesta: FyrxAssisted marca
+`message.fyrxAssistedHandled` **antes** de responder y FyrxAI ignora ese mensaje sin
+llamar a la IA. Solo hay que montar FyrxAssisted primero:
+
+```js
+setupFyrxAssisted(client);
+setupFyrxAI(client);
+```
+
+Los dos registran sus comandos sin borrar los del otro (`/fyrxassisted` y `/fyrxai`
+conviven en el mismo servidor).
+
+Para otro addon propio, `matchReply(guildId, content)` dice si un mensaje ya tiene
+respuesta enlatada:
 
 ```js
 const fyrxAssisted = require('@fyrx/fyrx-assisted');
 const match = fyrxAssisted.matchReply(message.guild.id, message.content);
 if (match) {
-    // ya respondido por fyrx-assisted (o respóndelo tú mismo) — no llames a fyrx-ai
+    // FyrxAssisted ya lo responde; no gastes una llamada a IA
 }
-```
-
-A partir de `@fyrx/fyrxai@1.3.0`, su propio listener de `messageCreate` respeta
-automáticamente `message.fyrxAssistedHandled` (lo marca `fyrx-assisted` tras
-responder), así que con ambos addons montados sobre el mismo `client` no hay
-doble respuesta — basta con montar `fyrx-assisted` antes de `fyrx-ai`:
-
-```js
-setupFyrxAssisted(client);
-setupFyrxAI(client);
 ```
 
 ## Licencia
