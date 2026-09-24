@@ -21,6 +21,12 @@ config.setReply(GUILD, 'vpn-user', 'Apaga tu VPN e intenta de nuevo.', ['vpn', '
 assert.deepStrictEqual(matchReply(GUILD, 'no conecta al server'), { id: 'vpn-user', text: 'Apaga tu VPN e intenta de nuevo.' });
 assert.strictEqual(matchReply(GUILD, 'hola que tal'), null);
 
+config.setReply(GUILD, 'edge', 'x', ['', 'proxy']);
+assert.strictEqual(matchReply(GUILD, 'hola que tal'), null); // empty keyword must not match everything
+assert.strictEqual(matchReply(GUILD, 'mi proxys falla'), null); // whole words only
+assert.strictEqual(matchReply(GUILD, 'el PROXY falla').id, 'edge');
+config.removeReply(GUILD, 'edge');
+
 config.setTrigger(GUILD, 'keyword', false);
 assert.strictEqual(config.getGuildConfig(GUILD).triggers.keyword, false);
 
