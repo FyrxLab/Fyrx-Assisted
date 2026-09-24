@@ -6,12 +6,13 @@
 
 const { commandData, handleInteraction } = require('./lib/slashCommands');
 const { handleMessage, matchReply } = require('./lib/replyHandler');
+const logger = require('./lib/logger');
 
 async function registerCommands(client) {
     try {
         await Promise.all(client.guilds.cache.map(g => g.commands.set([commandData]).catch(() => {})));
     } catch (err) {
-        console.error('[FyrxAssisted] Failed to register /fyrxassisted command:', err.message);
+        logger.error('[FyrxAssisted] Failed to register /fyrxassisted command:', err.message);
     }
 }
 
@@ -20,6 +21,7 @@ async function registerCommands(client) {
  *   log in) discord.js Client with the MessageContent intent enabled.
  */
 function setupFyrxAssisted(client) {
+    logger.log(`[FyrxAssisted] starting v${require('./package.json').version} node=${process.version} console=${logger.getSettings().consoleLogs ? 'on' : 'off'}`);
     let registered = false;
     const ready = () => {
         if (registered) return;
@@ -35,7 +37,7 @@ function setupFyrxAssisted(client) {
         try {
             await handleInteraction(interaction);
         } catch (err) {
-            console.error('[FyrxAssisted] Unhandled interaction error:', err);
+            logger.error('[FyrxAssisted] Unhandled interaction error:', err);
         }
     });
 
@@ -43,7 +45,7 @@ function setupFyrxAssisted(client) {
         try {
             await handleMessage(message);
         } catch (err) {
-            console.error('[FyrxAssisted] Unhandled error:', err);
+            logger.error('[FyrxAssisted] Unhandled error:', err);
         }
     });
 }

@@ -56,6 +56,9 @@ Activa/desactiva cada uno con `/fyrxassisted config trigger <tipo> <true|false>`
 /fyrxassisted config prefix [value]                      — ej. "//", vacío para desactivar
 /fyrxassisted config trigger <prefix|keyword|slash> <bool>
 /fyrxassisted config role <role> [remove]                — roles extra autorizados
+/fyrxassisted config cooldown <seconds>              — espera entre auto-respuestas por canal
+/fyrxassisted config logs <true|false>              — logs en consola (debug.txt siempre se guarda)
+/fyrxassisted config debug                          — te envía debug.txt
 /fyrxassisted config status
 /fyrxassisted send <id>
 ```
@@ -64,6 +67,12 @@ Toda la config requiere el permiso *Gestionar servidor* y las respuestas se
 guardan en `./fyrx-assisted-data/<guildId>.json` en el proceso del bot que
 consume el paquete (no dentro de `node_modules`, para que sobreviva a un
 `npm ci`/redeploy).
+
+## Debug
+
+Cada respuesta enviada, comando de configuración y error se guarda siempre en
+`fyrx-assisted-data/debug.txt` (rota a 2 MB). `/fyrxassisted config logs false` quita la salida por consola
+sin detener el archivo; `/fyrxassisted config debug` te lo envía para compartirlo. Contiene fragmentos de mensajes.
 
 ## Integración con fyrx-ai
 
