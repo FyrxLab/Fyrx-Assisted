@@ -8,9 +8,10 @@ const { commandData, handleInteraction } = require('./lib/slashCommands');
 const { handleMessage, matchReply } = require('./lib/replyHandler');
 const logger = require('./lib/logger');
 
+// create() upserts by name; set() would overwrite every other addon's guild commands.
 async function registerCommands(client) {
     try {
-        await Promise.all(client.guilds.cache.map(g => g.commands.set([commandData]).catch(() => {})));
+        await Promise.all(client.guilds.cache.map(g => g.commands.create(commandData).catch((err) => logger.error('[FyrxAssisted] Failed to register command in guild ' + g.id + ':', err.message))));
     } catch (err) {
         logger.error('[FyrxAssisted] Failed to register /fyrxassisted command:', err.message);
     }
@@ -31,7 +32,7 @@ function setupFyrxAssisted(client) {
     client.once('clientReady', ready);
     client.once('ready', ready);
 
-    client.on('guildCreate', (guild) => guild.commands.set([commandData]).catch(() => {}));
+    client.on('guildCreate', (guild) => guild.commands.create(commandData).catch((err) => logger.error('[FyrxAssisted] Failed to register command in guild ' + guild.id + ':', err.message)));
 
     client.on('interactionCreate', async (interaction) => {
         try {
